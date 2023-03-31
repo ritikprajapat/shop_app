@@ -6,6 +6,8 @@ import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
+  ProductItem(String id, String title, String imageUrl);
+
   // final String id;
   // final String title;
   // final String ImageUrl;
@@ -60,6 +62,20 @@ class ProductItem extends StatelessWidget {
             ),
             onPressed: () {
               cart.addItem(product.id, product.title, product.price);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Added item in cart !',
+                  ),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(product.id);
+                      }),
+                ),
+              );
             },
           ),
         ),
